@@ -9,6 +9,7 @@ background:#1F1F1F ;
     flex-direction: row;
     background: rgba(114, 104, 211, 0.8) ;
     margin: 50px 50px;
+    padding: 70px;
 
 }
 #form{
@@ -48,6 +49,10 @@ padding:10px;
     /* background: rgba(114, 104, 211, 0.8) ; */
     /* background:#3D3D3D; ; */
 
+}
+
+.td{
+    background:#3D3D3D; ; 
 }
 
 #button{

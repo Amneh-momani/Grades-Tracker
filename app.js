@@ -2,10 +2,9 @@
 
 let parent = document.getElementById('parent');
 let table = document.createElement('table');
-table.classList.add("table");
+table.classList.add('table');
 
 parent.appendChild(table);
-
 
 
 let headData = ['Student name', 'Student Grade', 'Course', 'Status'];
@@ -16,7 +15,7 @@ function header() {
   for (let x = 0; x < headData.length; x++) {
     let items = document.createElement('th');
     firstRow.appendChild(items);
-    items.classList.add("th");
+    items.classList.add('th');
 
     items.textContent = headData[x];
   }
@@ -24,8 +23,6 @@ function header() {
 header();
 
 let students = [];
-// let grade=0;
-// let status="";
 function Student(name, grade, course, status) {
   this.name = name;
   this.grade = grade;
@@ -35,56 +32,60 @@ function Student(name, grade, course, status) {
   updateStorge();
 }
 
-// Math.floor(Math.random() * 100))
 
 function updateStorge() {
-  let arrayString = JSON.stringify(Student.students);
+  let arrayString = JSON.stringify(students);
   localStorage.setItem('Student', arrayString);
 }
 
-function getStudentData(){
+function getStudentData() {
   let student = localStorage.getItem('Student');
   let data = JSON.parse(student);
 
   if (data) {
-    Student.students = data;
+    students = data;
   }
 }
 
-Student.prototype.randomGrade = function () {
-  let randGrade = Math.floor(Math.random() * 100);
-  this.grade = randGrade;
-  console.log(randGrade);
-};
 
 Student.prototype.render = function () {
+
   let studentData = document.createElement('tr');
   table.appendChild(studentData);
 
-  for (let x = 0; x < headData.length; x++) {
-    // let items = document.createElement('th');
-    // studentData.appendChild(items);
+  // for (let x = 0; x < headData.length; x++) {
 
-    if (this.grade >= 50) {
-      this.status = 'Pass';
-    }
-    else {
-      this.status = 'Fail';
-    }
-    for (let y = 0; y < Student.students.length; y++) {
-      // items.textContent =headData[x].students[y];
-      let items = document.createElement('td');
-      items.classList.add("td");
+  // for (let j = 0; j < students.length; j++) {
 
-      studentData.appendChild(items);
-      items.textContent = Student.students[y];
-    // items.textContent ="name";
-    console.log(students);
 
-    }
-  }
+
+  let studentName = document.createElement('td');
+  studentName.classList.add('td');
+  studentData.appendChild(studentName);
+  studentName.textContent = this.name;
+
+  let studentGrade = document.createElement('td');
+  studentGrade.classList.add('td');
+  studentData.appendChild(studentGrade);
+  studentGrade.textContent = this.grade;
+
+
+  let Course = document.createElement('td');
+  Course.classList.add('td');
+  studentData.appendChild(Course);
+  Course.textContent = this.course;
+
+
+  let studentStatus = document.createElement('td');
+  studentStatus.classList.add('td');
+  studentData.appendChild(studentStatus);
+  studentStatus.textContent = this.status;
+  // }
+
+  // }
 
 };
+
 
 let form = document.getElementById('form');
 form.addEventListener('submit', showResults);
@@ -96,19 +97,28 @@ function showResults(event) {
 
   let name = event.target.name.value;
   let course = event.target.course.value;
-  let grade = this.grade;
-  let status = this.status;
+  let grade = Math.floor(Math.random() * 100);
+
+  let status;
+  if (grade >= 50) {
+    status = 'Pass';
+  }
+  else {
+    status = 'Fail';
+  }
+
 
   let studentObj = new Student(name, grade, course, status);
-
-  table.textContent = '';
-  header();
-  for (let i = 0; i < students.length; i++) {
-    students[i].randomGrade();
-    students[i].render();
-  }
+  // table.textContent = '';
+  // header();
+  studentObj.render();
 
   updateStorge();
 }
 
+
+  // for (let c = 0; c < students.length; c++) {
+  //   students[c].render();
+  //   console.log(students[c]);
+  // }
 getStudentData();
